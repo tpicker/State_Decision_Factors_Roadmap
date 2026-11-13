@@ -79,6 +79,26 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
  .print-report .report-index{font-size:21pt;font-weight:700;color:#12385f;margin:8px 0}
 }
 </style>
+<style>/* The document's additions reuse the existing navy, white, and pale-blue palette. */
+.hero-location{margin-top:18px;max-width:500px}
+.hero-location label{color:#fff}
+.hero-location select:focus-visible{outline-color:#fff}
+.complexity-guide{margin-top:20px;padding:18px;background:#eef4f9;border:1px solid var(--line);border-radius:12px}
+.complexity-guide h3{font-size:18px;color:var(--navy);margin:0 0 8px}
+.complexity-guide>p{font-size:13px;line-height:1.6;color:var(--muted);margin:0 0 12px}
+.complexity-guide dl{margin:0}
+.complexity-band{display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;padding:11px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.6}
+.complexity-band dt{font-weight:700;color:var(--navy)}
+.complexity-band dd{margin:0}
+.complexity-band strong{display:block}
+.index-results{max-width:430px}
+.complexity-value{font-size:13px;line-height:1.6;margin:10px 0 0;color:var(--navy)}
+.response-copy-feedback{margin-bottom:16px}
+#copy-status:empty{display:none}
+.response-copy-fallback textarea{margin-top:12px;min-height:180px}
+@media(max-width:600px){.complexity-guide{padding:15px}.complexity-band{grid-template-columns:54px minmax(0,1fr);gap:10px}}
+@media print{.response-copy-feedback{display:none!important}.print-report .report-complexity{font-size:11pt;line-height:1.5;margin:8px 0}.print-report .report-complexity-guide{font-size:9pt;margin:5px 0}}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to roadmap</a>
@@ -88,12 +108,16 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
       <p class="eyebrow">State decision roadmap</p>
       <h1>State AI Development Decision Roadmap</h1>
       <p class="intro">Identify and prioritize the factors that will help your assigned state prepare for AI readiness, including energy, water, land, infrastructure, and workforce needs. </p>
+    <div class="hero-location"><label id="location-top-label" for="location-top">Assigned U.S. state</label><select id="location-top" autocomplete="off"><option value="">Select a state</option><option value="Colorado">Colorado</option><option value="Connecticut">Connecticut</option><option value="Maryland">Maryland</option><option value="New York">New York</option><option value="South Dakota">South Dakota</option><option value="Texas">Texas</option><option value="West Virginia">West Virginia</option></select></div>
     </header>
     <div class="toolbar" aria-label="Roadmap actions">
-      <p class="save-note">Responses stay in this tab. Print or save a PDF before closing or refreshing.</p>
+      <p class="save-note" id="copy-help">Responses stay in this tab. Copy a summary or save a PDF before closing or refreshing.</p>
       <button id="reset-ratings" type="button">Reset ratings</button>
+      <button id="copy-summary" type="button" aria-describedby="copy-help">Copy summary of responses</button>
       <button id="print-button" type="button" class="primary">Print / Save PDF</button>
     </div>
+    <div class="response-copy-feedback"><p class="help" id="copy-status" role="status"></p><div class="content response-copy-fallback" id="copy-fallback" hidden><label for="copy-text">Summary of responses — manual copy</label><p class="help" id="copy-instructions">Press Ctrl+C or Command+C to copy the selected text. On a touch device, use the text selection menu’s Copy command.</p><textarea id="copy-text" rows="10" readonly aria-describedby="copy-instructions"></textarea></div></div>
+
     <noscript><p class="content">Enable JavaScript to calculate the priority index and create a printable response.</p></noscript>
     <main id="main">
       <section class="content" aria-labelledby="context-heading">
@@ -101,11 +125,21 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
         <p class="sub">Identify the location you are assessing for AI readiness.</p>
         <div class="context-grid">
           <div>
-            <label for="location">Assigned U.S. state <span class="optional">(optional)</span></label>
+            <label for="location">Assigned U.S. state</label>
             <select id="location" autocomplete="off"><option value="">Select a state</option><option value="Colorado">Colorado</option><option value="Connecticut">Connecticut</option><option value="Maryland">Maryland</option><option value="New York">New York</option><option value="South Dakota">South Dakota</option><option value="Texas">Texas</option><option value="West Virginia">West Virginia</option></select>
           </div>
         </div>
-      </section>
+      
+        <div class="complexity-guide" aria-labelledby="complexity-guide-title">
+          <h3 id="complexity-guide-title">AI readiness implementation complexity index</h3>
+          <p>Use this course guide to interpret a completed 0–50 priority index. The bands describe anticipated complexity from competing priorities.</p>
+          <dl>
+            <div class="complexity-band"><dt>40–50</dt><dd><strong>More complex AI readiness implementation</strong>Anticipate many competing priorities.</dd></div>
+            <div class="complexity-band"><dt>30–39</dt><dd><strong>Moderately complex AI readiness implementation</strong>Anticipate several competing priorities.</dd></div>
+            <div class="complexity-band"><dt>0–29</dt><dd><strong>Lower complexity or simpler AI readiness implementation</strong>Anticipate few competing priorities.</dd></div>
+          </dl>
+        </div>
+</section>
       <section class="content" aria-labelledby="factors-heading">
         <div class="factor-heading">
           <div>
@@ -125,7 +159,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
         </div>
 <div class="factor">
           <span class="factor-number">FACTOR 02</span>
-          <h3 id="factor-name-1">State Policy &amp; Education System</h3>
+          <h3 id="factor-name-1">Talent Pipeline &amp; Education System</h3>
           <div class="rating-field">
             <label id="weight-label-1" for="weight-1">Importance weight</label>
             <select id="weight-1" aria-labelledby="factor-name-1 weight-label-1"><option value="">Select a weight</option><option value="0">0 — Not applicable</option><option value="1">1 — Lowest</option><option value="2">2 — Low</option><option value="3">3 — Moderate</option><option value="4">4 — High</option><option value="5">5 — Highest</option></select>
@@ -133,7 +167,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
         </div>
 <div class="factor">
           <span class="factor-number">FACTOR 03</span>
-          <h3 id="factor-name-2">Existing Industry Strength &amp; Synergies</h3>
+          <h3 id="factor-name-2">Existing Industry Strengths &amp; Synergies</h3>
           <div class="rating-field">
             <label id="weight-label-2" for="weight-2">Importance weight</label>
             <select id="weight-2" aria-labelledby="factor-name-2 weight-label-2"><option value="">Select a weight</option><option value="0">0 — Not applicable</option><option value="1">1 — Lowest</option><option value="2">2 — Low</option><option value="3">3 — Moderate</option><option value="4">4 — High</option><option value="5">5 — Highest</option></select>
@@ -173,7 +207,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
         </div>
 <div class="factor">
           <span class="factor-number">FACTOR 08</span>
-          <h3 id="factor-name-7">Workforce Diversity &amp; Skills</h3>
+          <h3 id="factor-name-7">Workforce Diversity &amp; Inclusion</h3>
           <div class="rating-field">
             <label id="weight-label-7" for="weight-7">Importance weight</label>
             <select id="weight-7" aria-labelledby="factor-name-7 weight-label-7"><option value="">Select a weight</option><option value="0">0 — Not applicable</option><option value="1">1 — Lowest</option><option value="2">2 — Low</option><option value="3">3 — Moderate</option><option value="4">4 — High</option><option value="5">5 — Highest</option></select>
@@ -203,15 +237,16 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
           <div class="index-results" role="status" aria-live="polite" aria-atomic="true" aria-labelledby="index-heading">
             <p class="index-score" id="index-value">— / 50</p>
             <p class="index-status" id="index-status">Not started · 0 of 10 factors rated</p>
+            <p class="complexity-value" id="complexity-value">Not yet interpreted — complete all 10 factor weights (0 rated).</p>
           </div>
         </div>
       </section>
     </main>
-    <footer>Browser-based student drafting tool · Nothing is submitted or shared automatically.</footer>
+    
   </div>
   <section id="print-report" class="print-report" aria-label="Printable roadmap response"></section>
 </div>
-<script type="application/json" id="roadmap-config">{"title": "State AI Development Decision Roadmap", "scope": "U.S. state", "locationLabel": "Assigned U.S. state", "locationPlaceholder": "Enter your assigned state", "prompt": "Explain how your assigned state or nation can prepare for AI readiness by addressing energy, water, land, infrastructure, and workforce needs. Connect your priorities to local strengths, resilience, and economic, social, and environmental goals.", "factors": ["Economic Development Potential", "State Policy & Education System", "Existing Industry Strength & Synergies", "Infrastructure & Digital Readiness", "Cost of Doing Business & Incentives", "Innovation Ecosystem & Research Assets", "Access to Capital & Funding", "Workforce Diversity & Skills", "Sustainability & Community Impact", "Risk & Resilience Factors"]}</script>
+<script type="application/json" id="roadmap-config">{"title": "State AI Development Decision Roadmap", "scope": "U.S. state", "locationLabel": "Assigned U.S. state", "locationPlaceholder": "Enter your assigned state", "prompt": "Explain how your assigned state or nation can prepare for AI readiness by addressing energy, water, land, infrastructure, and workforce needs. Connect your priorities to local strengths, resilience, and economic, social, and environmental goals.", "factors": ["Economic Development Potential", "Talent Pipeline & Education System", "Existing Industry Strengths & Synergies", "Infrastructure & Digital Readiness", "Cost of Doing Business & Incentives", "Innovation Ecosystem & Research Assets", "Access to Capital & Funding", "Workforce Diversity & Inclusion", "Sustainability & Community Impact", "Risk & Resilience Factors"]}</script>
 <script>
 (() => {
   'use strict';
@@ -247,6 +282,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
     progress.textContent = `${index.count} of ${ratings.length} factors rated`;
     indexValue.textContent = `${index.count ? index.total : '—'} / ${index.maximum}`;
     indexStatus.textContent = describeIndex(index);
+    complexityValue.textContent = describeComplexity(index);
   }
 
   function makeElement(tag, text, className) {
@@ -270,6 +306,8 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
     report.append(details, makeElement('h2', 'Priority index'));
     report.append(makeElement('p', `${index.count ? index.total : '—'} / ${index.maximum}`, 'report-index'));
     report.append(makeElement('p', describeIndex(index), 'report-prompt'));
+    report.append(makeElement('p', 'Course complexity interpretation: '+describeComplexity(index), 'report-complexity'));
+    complexityBands.forEach(band=>report.append(makeElement('p', `${band.minimum}–${band.maximum}: ${band.label}. ${band.description}`, 'report-complexity-guide')));
     report.append(makeElement('p', `Sum of the ten importance weights. Each factor contributes 0–5 points; maximum ${index.maximum}.`, 'report-prompt'));
     report.append(makeElement('h2', 'Decision factors'));
     report.append(makeElement('p', 'Importance weights: 0 = not applicable; 1 = lowest; 2 = low; 3 = moderate; 4 = high; 5 = highest.', 'report-prompt'));
@@ -295,6 +333,67 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
     report.append(makeElement('p', 'Importance weights express the student’s priorities for AI readiness.', 'report-note'));
   }
 
+  const locationTop = document.getElementById('location-top');
+  const complexityValue = document.getElementById('complexity-value');
+  const complexityBands = [
+    {minimum:40,maximum:50,label:'More complex AI readiness implementation',description:'Anticipate many competing priorities.'},
+    {minimum:30,maximum:39,label:'Moderately complex AI readiness implementation',description:'Anticipate several competing priorities.'},
+    {minimum:0,maximum:29,label:'Lower complexity or simpler AI readiness implementation',description:'Anticipate few competing priorities.'}
+  ];
+
+  function describeComplexity(index) {
+    if(index.count!==ratings.length) return `Not yet interpreted — complete all ${ratings.length} factor weights (${index.count} rated).`;
+    const band=complexityBands.find(band=>index.total>=band.minimum&&index.total<=band.maximum);
+    return `${band.label} (${band.minimum}–${band.maximum}): ${band.description}`;
+  }
+
+  function responseSummaryText() {
+    const index=calculateIndex();
+    const lines=[
+      `${config.title} — Summary of responses`,
+      `${config.locationLabel}: ${locationInput.value.trim()||'Not selected'}`,
+      '', 'PRIORITY INDEX',
+      `${index.count?index.total:'—'} / ${index.maximum}`,
+      describeIndex(index),
+      `Course complexity interpretation: ${describeComplexity(index)}`,
+      '', 'DECISION FACTORS AND IMPORTANCE WEIGHTS'
+    ];
+    config.factors.forEach((name,index)=>lines.push(`${index+1}. ${name}: ${weightLabels[ratings[index].value]||'Not rated'}`));
+    lines.push('', 'COURSE COMPLEXITY GUIDE');
+    complexityBands.forEach(band=>lines.push(`${band.minimum}–${band.maximum}: ${band.label}. ${band.description}`));
+    lines.push('',`The index adds the ${ratings.length} importance weights (0–5 each). A zero is a completed rating; a blank is not rated. Interpret complexity after all ${ratings.length} weights have been selected.`);
+    return lines.join('\n');
+  }
+
+  function clearResponseCopy() {
+    document.getElementById('copy-fallback').hidden=true;
+    document.getElementById('copy-text').value='';
+    document.getElementById('copy-status').textContent='';
+  }
+
+  async function copyResponseSummary() {
+    const text=responseSummaryText();
+    clearResponseCopy();
+    try {
+      await navigator.clipboard.writeText(text);
+      document.getElementById('copy-status').textContent='Summary of responses copied. Paste it into ThingLink or your document.';
+    } catch(error) {
+      const field=document.getElementById('copy-text');field.value=text;
+      document.getElementById('copy-fallback').hidden=false;
+      field.focus();field.select();
+      document.getElementById('copy-status').textContent='Automatic copying is unavailable. Your summary is selected below; copy it using your keyboard or device’s Copy command.';
+    }
+  }
+
+  locationTop.value=locationInput.value;
+  locationTop.addEventListener('change',()=>{locationInput.value=locationTop.value;clearResponseCopy();});
+  locationInput.addEventListener('change',()=>{locationTop.value=locationInput.value;clearResponseCopy();});
+  document.getElementById('copy-summary').addEventListener('click',copyResponseSummary);
+  document.getElementById('copy-text').addEventListener('click',event=>event.target.select());
+  document.addEventListener('input',event=>{if(event.target.id!=='copy-text')clearResponseCopy();});
+  document.addEventListener('change',event=>{if(event.target.id!=='copy-text')clearResponseCopy();});
+  document.addEventListener('click',event=>{if(event.target.id==='reset-ratings')clearResponseCopy();});
+
   ratings.forEach(select => select.addEventListener('change', updateSummary));
   document.getElementById('reset-ratings').addEventListener('click', () => {
     ratings.forEach(select => { select.value = ''; });
@@ -311,3 +410,4 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
 </script>
 </body>
 </html>
+
