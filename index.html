@@ -80,9 +80,6 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
 }
 </style>
 <style>/* The document's additions reuse the existing navy, white, and pale-blue palette. */
-.hero-location{margin-top:18px;max-width:500px}
-.hero-location label{color:#fff}
-.hero-location select:focus-visible{outline-color:#fff}
 .complexity-guide{margin-top:20px;padding:18px;background:#eef4f9;border:1px solid var(--line);border-radius:12px}
 .complexity-guide h3{font-size:18px;color:var(--navy);margin:0 0 8px}
 .complexity-guide>p{font-size:13px;line-height:1.6;color:var(--muted);margin:0 0 12px}
@@ -108,7 +105,6 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
       <p class="eyebrow">State decision roadmap</p>
       <h1>State AI Development Decision Roadmap</h1>
       <p class="intro">Identify and prioritize the factors that will help your assigned state prepare for AI readiness, including energy, water, land, infrastructure, and workforce needs. </p>
-    <div class="hero-location"><label id="location-top-label" for="location-top">Assigned U.S. state</label><select id="location-top" autocomplete="off"><option value="">Select a state</option><option value="Colorado">Colorado</option><option value="Connecticut">Connecticut</option><option value="Maryland">Maryland</option><option value="New York">New York</option><option value="South Dakota">South Dakota</option><option value="Texas">Texas</option><option value="West Virginia">West Virginia</option></select></div>
     </header>
     <div class="toolbar" aria-label="Roadmap actions">
       <p class="save-note" id="copy-help">Responses stay in this tab. Copy a summary or save a PDF before closing or refreshing.</p>
@@ -333,7 +329,6 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
     report.append(makeElement('p', 'Importance weights express the student’s priorities for AI readiness.', 'report-note'));
   }
 
-  const locationTop = document.getElementById('location-top');
   const complexityValue = document.getElementById('complexity-value');
   const complexityBands = [
     {minimum:40,maximum:50,label:'More complex AI readiness implementation',description:'Anticipate many competing priorities.'},
@@ -385,9 +380,6 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:0 12px 18px}
     }
   }
 
-  locationTop.value=locationInput.value;
-  locationTop.addEventListener('change',()=>{locationInput.value=locationTop.value;clearResponseCopy();});
-  locationInput.addEventListener('change',()=>{locationTop.value=locationInput.value;clearResponseCopy();});
   document.getElementById('copy-summary').addEventListener('click',copyResponseSummary);
   document.getElementById('copy-text').addEventListener('click',event=>event.target.select());
   document.addEventListener('input',event=>{if(event.target.id!=='copy-text')clearResponseCopy();});
